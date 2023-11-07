@@ -14,9 +14,10 @@
     <main>
         <ul>
         <?php
-            require_once './task.php'
+            require_once './task.php';
         ?>
         </ul>
+        <button class="btn-add-task">Add new task</button>
     </main>
     <footer>
         <p> By Aurelien et Gildas </p>
