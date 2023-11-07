@@ -8,7 +8,7 @@
         <input class="checkbox-task" type="checkbox" name="checkbox" id="checkbox-task">
     </form>
     </div>
-    <div class="back-line"
+    <div class="back-line hidden"
     <p class="date-task"> 22-10-2023</p>
     <p class="text-task">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit, distinctio cumque. 
         Similique velit animi quidem illo ab non dolorem culpa incidunt saepe fugit aperiam placeat, 

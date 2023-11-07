@@ -22,5 +22,6 @@
     <footer>
         <p> By Aurelien et Gildas </p>
     </footer> 
+    <script src="./asset/js/script.js"></script>  
 </body>
 </html>
