@@ -1,0 +1,29 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color:#C5E3E2
+}
+
+
+.home-title {
+    font-size: 3.5rem;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+}
+
+
+/********** CARD TASK *************/
+.task {
+    background: #9eb8b7;
+    margin: 5%;
+    padding: 3%;
+}
+
+.title-task {
+    font-size: 1.8rem;
+}
+.date-task {
+    font-style: italic;
+}
