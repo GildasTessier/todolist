@@ -1,3 +1,6 @@
+<?php
+require_once './dbCo.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -20,7 +23,7 @@
         <button class="btn-add-task">Add new task</button>
     </main>
     <footer>
-        <p> By Aurelien et Gildas </p>
+        <p> By Aurelien & Gildas </p>
     </footer> 
     <script src="./asset/js/script.js"></script>  
 </body>
