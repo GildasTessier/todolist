@@ -1,6 +1,7 @@
 body {
     font-family: 'Courier New', Courier, monospace;
-    background-color:#C5E3E2
+    background-color:#C5E3E2;
+    margin: 5%;
 }
 
 
@@ -12,12 +13,29 @@ body {
 footer {
     text-align: center;
 }
+button {
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: none;
+    border: solid 1px #C5E3E2;
+    background: none;
+    padding: 0.5em;
+    margin: 1em;
+    font-size: 1rem;
+}
+.btn-add-task {
+    background: #b8a99e;
+    position: sticky;
+    bottom: 4%;
+    border: none;
+    padding: 2%;
+    
+}
 
 
 /********** CARD TASK *************/
 .task {
     background: #9eb8b7;
-    margin: 5%;
+    margin: 5% 0;
     padding: 3%;
 }
 
@@ -26,4 +44,25 @@ footer {
 }
 .date-task {
     font-style: italic;
+    margin-bottom: 5px;
+}
+
+.first-line-task {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.checkbox-task {
+    margin-right: 20px;
+}
+input[type="checkbox"] {
+    width: 30px; /* Largeur souhaitée */
+    height: 30px; /* Hauteur souhaitée */
+  }
+.btns-task {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
 }
