@@ -6,14 +6,14 @@ $result = $query->fetchAll();
 foreach($result as $task) {
 
 echo '<li>
-    <form class="task">
-        <input class="title-task" type="text" name="task" id="'.$task['id_task'].'" value=" '. $task['name_task'].'">
-        <button class="btn-priority-up" id="btn-priority">⇧</button>
-        <button class="btn-priority-down" id="btn-priority">⇩</button>
-        <button class="btn-mod-task">MODIFY</button>
-        <button class="btn-del-task">DELET</button>
-        <button class="btn-finish-task">FINISH ✓</button>
+    <form class="task" id="'.$task['id_task'].'">
+        <input class="title-task" type="text" name="task" id="text-task" value=" '. $task['name_task'].'">
+        <input type="submit" class="submit btn-mod-task" value="MODIFY">
+        <a class="submit btn-priority-up" href="#">⇧</a>
+        <a class="submit btn-priority-down" href="#">⇩</a>
+        <a class="submit btn-del-task" href="#">DELET</a>
+        <a class="submit btn-finish-task" href="?id='.$task['id_task'].'">FINISH ✓</a>
     </form>
 </li>';
-}
+};
 ?>
