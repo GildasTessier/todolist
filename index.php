@@ -34,7 +34,7 @@ foreach($result as $task) {
     <input type="hidden" name="id" value="<?=$task['id_task']?>">
     <a class="submit btn-priority-up" href="#">⇧</a>
     <a class="submit btn-priority-down" href="#">⇩</a>
-    <a class="submit btn-del-task" href="#">DELET</a>
+    <a class="submit btn-del-task" href="action.php?action=delete&id=<?=$task['id_task']?>">DELET</a>
     <a class="submit btn-finish-task" href="action.php?action=state&id=<?=$task['id_task']?>">FINISH ✓</a>
     </form>
     </li>
