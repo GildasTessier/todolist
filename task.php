@@ -6,9 +6,11 @@ $result = $query->fetchAll();
 foreach($result as $task) {
 
 echo '<li>
-    <form class="task" id="'.$task['id_task'].'">
-        <input class="title-task" type="text" name="task" id="text-task" value=" '. $task['name_task'].'">
+    <form class="task" method="post">
+        <input class="title-task" type="text" name="task" id="text-task" value="'.$task['name_task'].'">
         <input type="submit" class="submit btn-mod-task" value="MODIFY">
+        <input type="hidden" name="token" value="'.$_SESSION['token'].'">
+        <input type="hidden" name="id" value="'.$task['id_task'].'">
         <a class="submit btn-priority-up" href="#">⇧</a>
         <a class="submit btn-priority-down" href="#">⇩</a>
         <a class="submit btn-del-task" href="#">DELET</a>
