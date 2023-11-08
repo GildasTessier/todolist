@@ -1,6 +1,3 @@
-
-
-
 <?php
 session_start();
 if(!isset($_SESSION['token'])) {
@@ -10,7 +7,6 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
 require_once './dbCo.php';
 require_once './query_create_task.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
