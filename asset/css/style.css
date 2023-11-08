@@ -1,13 +1,20 @@
+
+
 body {
     font-family: 'Courier New', Courier, monospace;
     background-color:#C5E3E2;
-    margin: 5%;
+    margin: auto;
+    max-width: 450px;
+}
+li {
+    list-style: none;
 }
 
 
 .home-title {
-    font-size: 3.5rem;
+    font-size: 2rem;
     text-align: center;
+    margin-top: 10px;
 }
 
 footer {
@@ -22,47 +29,88 @@ button {
     margin: 1em;
     font-size: 1rem;
 }
-.btn-add-task {
-    background: #b8a99e;
-    position: sticky;
-    bottom: 4%;
-    border: none;
-    padding: 2%;
-    
+input {
+    font-family: 'Courier New', Courier, monospace;
 }
+
 
 
 /********** CARD TASK *************/
 .task {
     background: #9eb8b7;
+    display: grid;
+    width: 100%;
     margin: 5% 0;
-    padding: 3%;
-}
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(2, 1fr);
 
+    
+}
 .title-task {
-    font-size: 1.8rem;
+    background-color: #9eb8b7;
+    border: 0;
+    padding-left: 0.5em;
+    font-size: 1em;
+
+    grid-column : 1 / 7 ;
+    grid-row: 1 ;
 }
-.date-task {
-    font-style: italic;
-    margin-bottom: 5px;
+.btn-priority-up {
+    grid-column : 7 / 8;
+    grid-row: 1;
+    font-size: 1em;
+    margin: 0.5em;
+
+
+
+}
+.btn-priority-down {
+    grid-column : 8 / 9;
+    grid-row: 1;
+    font-size: 1em;
+    margin: 0.5em;
+
+    
+}
+.btn-mod-task {
+    grid-column : 1 / 2;
+    grid-row: 2;
+    font-size: 0.6em;
+}
+.btn-del-task {
+    grid-column : 2 / 3;
+    grid-row: 2;
+    font-size: 0.6em;
+}
+.btn-finish-task {
+    grid-column : 5 / 9;
+    grid-row: 2;
+    font-size: 0.6em;
+    margin-right: 0.5em;
 }
 
-.first-line-task {
+/********** FORM CREATE TASK *************/
+.create-task {
+    position: sticky;
+    bottom: 0;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
+    background: #b8a99e;
+    padding: 10px 5px;
+}
+.btn-add-task {
+    background: #b8a99e;
+    position: sticky;
+    bottom: 4%;
+    border: solid 1px #f3e1d4;
+    padding: 2%; 
+}
+.title-create-task {
+    width: 60%;
+    margin-right: 10px;
+
 }
 
-.checkbox-task {
-    margin-right: 20px;
-}
-input[type="checkbox"] {
-    width: 30px; /* Largeur souhaitée */
-    height: 30px; /* Hauteur souhaitée */
-  }
-.btns-task {
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-}
+
+

@@ -1,3 +1,16 @@
+
+
+
+<?php
+session_start();
+if(!isset($_SESSION['token'])) {
+$_SESSION['token'] = md5(uniqid(mt_rand(), true));
+}
+
+require_once './dbCo.php';
+require_once './query_create_task.php';
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,10 +30,12 @@
             require_once './task.php';
         ?>
         </ul>
-        <button class="btn-add-task">Add new task</button>
+        <?php
+            require_once './create_task.php';
+        ?>
     </main>
     <footer>
-        <p> By Aurelien et Gildas </p>
+        <p class="text-footer"> By Aurelien & Gildas </p>
     </footer> 
     <script src="./asset/js/script.js"></script>  
 </body>
