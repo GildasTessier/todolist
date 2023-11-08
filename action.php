@@ -69,5 +69,13 @@ else if ($_GET['action'] === 'state' && isset($_GET['id'])){
         'id_task' => intval($_GET['id'])
         ]);}
 
+
+// FOR DELETE TASK
+else if ($_GET['action'] === 'delete' && isset($_GET['id'])){
+    $query = $dbCo->prepare(" DELETE FROM task WHERE id_task = :id_task;");
+    $isquerryok = $query->execute([
+        'id_task' => intval($_GET['id'])
+        ]);}
+
 header('Location: index.php?')
 ?>
