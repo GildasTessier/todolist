@@ -1,30 +1,19 @@
 <?php
-$query = $dbCo->prepare("SELECT name_task, date_create_task, description_task FROM task");
+$query = $dbCo->prepare("SELECT id_task, name_task, description_task FROM task WHERE state_task = 0 ORDER BY priority_task DESC");
 $query->execute();
 $result = $query->fetchAll();
-?>
 
-<?php
 foreach($result as $task) {
-echo'<li class="task">
-    <div class="first-line-task">
-    
-    <button class="btn-priority" id="btn-priority">UP⇧</button>
-<h3 class="title-task">'.$task['name_task'].'</h3>
 
-<form>
-<input class="checkbox-task" type="checkbox" name="checkbox" id="checkbox-task">
-</form>
-</div>
-<div class="back-line hidden">
-<p class="date-task">'.$task['date_create_task'].'</p>
-<p class="text-task">'.$task['description_task'].'</p>
-        <div class="btns-task">
-        <button class="btn-mod-task">Modifier</button>
-        <button class="btn-del-task">Supprimer</button>
-        </div>
-        </div>
-        </li>'
-    ;}
-        ?>
-
+echo '<li>
+    <form class="task">
+        <input class="title-task" type="text" name="task" id="'.$task['id_task'].'" value=" '. $task['name_task'].'">
+        <button class="btn-priority-up" id="btn-priority">⇧</button>
+        <button class="btn-priority-down" id="btn-priority">⇩</button>
+        <button class="btn-mod-task">MODIFY</button>
+        <button class="btn-del-task">DELET</button>
+        <button class="btn-finish-task">FINISH ✓</button>
+    </form>
+</li>';
+}
+?>
