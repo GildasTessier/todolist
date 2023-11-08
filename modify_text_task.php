@@ -9,8 +9,12 @@ $query = $dbCo->prepare(" UPDATE task SET name_task = :name_task   WHERE id_task
             $isQueryOk = $query->execute([
             'name_task' => strip_tags($_POST['task']), 
             'id' => intval($_POST['id']) ]
-
         );
+    $query = $dbCo->prepare(" UPDATE task SET priority_task = :id   WHERE id_task = :id ");
+        $isQueryOk = $query->execute([
+        'name_task' => strip_tags($_POST['task']), 
+        'id' => intval($_POST['id']) ]);
+
             if($isQueryOk && $query->rowCount()=== 1) {
                 $msg = 'La tache à été ajouté à la liste';
             };
