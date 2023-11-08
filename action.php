@@ -1,10 +1,9 @@
 <?php
-require_once './dbCo.php';
-
 session_start();
-if(!isset($_SESSION['token'])) {
-$_SESSION['token'] = md5(uniqid(mt_rand(), true));
-}
+require_once './_function.php';
+require_once './dbCo.php';
+// checkCSRF('index.php');
+
 
 
 

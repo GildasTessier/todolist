@@ -19,5 +19,3 @@ VALUES ("faire mon lit", "2023-11-07 10:00:35","fair mon lit au carré ",0),
 
 UPDATE task
 SET priority_task = id_task
-
-CURDATE()
