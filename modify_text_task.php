@@ -1,16 +1,14 @@
-
 <?php
 
 
-if(isset($_POST['new_task'])) {  
+if(isset($_POST['task'])) {  
     if(isset($_POST['token']) && isset($_SESSION['token']) && $_SESSION['token'] === $_POST['token']) {
 
-        if(strlen($_POST['new_task']) > 0) {                        
-$query = $dbCo->prepare(" INSERT INTO task (name_task, date_create, state_task)
-                            VALUES (:new_task, :day_now, 0);");
+        if(strlen($_POST['task']) > 0) {                        
+$query = $dbCo->prepare(" UPDATE task SET name_task = :name_task   WHERE id_task = :id ");
             $isQueryOk = $query->execute([
-            'new_task' => strip_tags($_POST['new_task']), 
-            'day_now' => date('Y-m-d h:i:s')]
+            'name_task' => strip_tags($_POST['task']), 
+            'id' => intval($_POST['id']) ]
 
         );
             if($isQueryOk && $query->rowCount()=== 1) {

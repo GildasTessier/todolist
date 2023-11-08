@@ -40,6 +40,9 @@ button {
     font-size: 1rem;
     color: black;
     text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
 input {
     font-family: 'Courier New', Courier, monospace;

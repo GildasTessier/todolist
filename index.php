@@ -9,6 +9,7 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
 
 require_once './dbCo.php';
 require_once './query_create_task.php';
+require_once './modify_text_task.php';
 ?>
 
 <!DOCTYPE html>
