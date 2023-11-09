@@ -2,7 +2,7 @@
 session_start();
 require_once './_function.php';
 require_once './dbCo.php';
-// checkCSRF('index.php');
+checkCSRF('index.php');
 
 
 
@@ -42,14 +42,13 @@ $query = $dbCo->prepare(" INSERT INTO task (name_task, date_create, state_task, 
 
 // FOR MODIFY TASK
 else if(isset($_POST['task'])) {  
-    var_dump($_POST);
     if(isset($_POST['token']) && isset($_SESSION['token']) && $_SESSION['token'] === $_POST['token']) {
         
         if(strlen($_POST['task']) > 0) {                        
-            $query = $dbCo->prepare(" UPDATE task SET name_task = :name_task   WHERE id_task = :id ");
+            $query = $dbCo->prepare(" UPDATE task SET name_task = :name_task   WHERE id_task = :id_task ");
             $isQueryOk = $query->execute([
                 'name_task' => strip_tags($_POST['task']), 
-                'id' => intval($_POST['id']) ]
+                'id_task' => intval($_POST['id']) ]
             );
             
             if($isQueryOk && $query->rowCount()=== 1) {
@@ -66,7 +65,9 @@ else if(isset($_POST['task'])) {
 }
 //FOR UPDATE STATE TASK
 else if ($_GET['action'] === 'state' && isset($_GET['id'])){
-    $query = $dbCo->prepare(" UPDATE task SET state_task = 1 WHERE id_task = :id_task;");
+        // FOR CHANDE ORDER WHEN DELETE
+        updateNbPriority($dbCo);
+    $query = $dbCo->prepare(" UPDATE task SET state_task = 1, priority_task = NULL WHERE id_task = :id_task;");
     $isquerryok = $query->execute([
         'id_task' => intval($_GET['id'])
         ]);}
@@ -113,15 +114,20 @@ else if ($_GET['action'] === 'state' && isset($_GET['id'])){
                     'id_task' => intval($_GET['id']),
                     'nbPrio' => $nbprio['priority_task']
                 ]);
-                };
+                }
 
 
 // FOR DELETE TASK
 else if ($_GET['action'] === 'delete' && isset($_GET['id'])){
+    // FOR CHANDE ORDER WHEN DELETE
+    updateNbPriority($dbCo);
+    // FOR DELETE
     $query = $dbCo->prepare(" DELETE FROM task WHERE id_task = :id_task;");
     $isquerryok = $query->execute([
         'id_task' => intval($_GET['id'])
-        ]);}
+        ]);
+    }
+
 
 header('Location: index.php?')
 ?>
