@@ -73,7 +73,7 @@ else if ($_GET['action'] === 'state' && isset($_GET['id'])){
         
 
 
-        // FOR CHANGE ORDER IN LIST
+// FOR CHANGE ORDER IN LIST
 
         // UP
         else if ($_GET['action'] === 'up' && isset($_GET['id'])){
@@ -116,12 +116,12 @@ else if ($_GET['action'] === 'state' && isset($_GET['id'])){
                 };
 
 
+// FOR DELETE TASK
+else if ($_GET['action'] === 'delete' && isset($_GET['id'])){
+    $query = $dbCo->prepare(" DELETE FROM task WHERE id_task = :id_task;");
+    $isquerryok = $query->execute([
+        'id_task' => intval($_GET['id'])
+        ]);}
 
-
-
-header('Location: index.php?');
-
-
-
-
+header('Location: index.php?')
 ?>
