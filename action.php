@@ -3,6 +3,7 @@ session_start();
 require_once './_function.php';
 require_once './dbCo.php';
 checkCSRF('index.php');
+$msg = 'nothing';
 
 // FOR ADD NEW TASK
 if(isset($_POST['new_task'])) {  

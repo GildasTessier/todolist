@@ -21,10 +21,10 @@ $_SESSION['tokenExpire'] =  time() +  15 * 60;
 function checkCSRF(string $url): void
 {
     if (!isset($_SERVER['HTTP_REFERER']) || !str_contains($_SERVER['HTTP_REFERER'], 'http://localhost/todolist')) {
-        header('Location: ' . $url . '?error=error_referer');
+        header('Location: ' . $url . '?notif=error_referer');
         exit;
     } else if (!isset($_SESSION['token']) || !isset($_REQUEST['token']) || $_REQUEST['token'] !== $_SESSION['token'] || $_SESSION['tokenExpire'] < time()) {
-        header('Location: ' . $url . '?error=error_token');
+        header('Location: ' . $url . '?notif=error_token');
         exit;
     }
 };
