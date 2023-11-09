@@ -114,7 +114,7 @@ $nbrow = $query->fetch();
     }
 
     else {
-        $msg = 'addTaskError';
+        $msg = 'nothing';
     }
 }
 
