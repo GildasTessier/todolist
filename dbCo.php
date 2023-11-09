@@ -3,7 +3,7 @@ try {
     $dbCo = new PDO(
     'mysql:host=localhost;dbname=todolist;charset=utf8',
     'phpcrud',
-    'crudphp');
+    'password');
 
 $dbCo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,
 PDO::FETCH_ASSOC);
