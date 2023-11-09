@@ -2,6 +2,7 @@
 session_start();
 require_once './_function.php';
 require_once './dbCo.php';
+include './notif.php';
 generateToken();
 ?>
 <!DOCTYPE html>
@@ -16,7 +17,10 @@ generateToken();
 <body>
     <header class="container">
         <h1 class="home-title">My To Do +</h1>
-    </header>
+        <h2 class="notif"><?php
+        if(isset($_GET['notif'])){echo $notif[$_GET['notif']];}?>
+        </h2>
+        </header>
     <main>
         <ul>
         <?php
@@ -53,7 +57,7 @@ foreach($result as $task) {
 
     </main>
     <footer>
-        <p class="text-footer"> By Aurelien & Gildas </p>
+        <p class="text-footer"> By Aurelien & surtout Gildas </p>
     </footer> 
     <script src="./asset/js/script.js"></script>  
 </body>
