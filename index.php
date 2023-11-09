@@ -36,10 +36,10 @@ foreach($result as $task) {
     <input type="submit" class="submit btn-mod-task" value="MODIFY">
     <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
     <input type="hidden" name="id" value="<?=$task['id_task']?>">
-    <a class="submit btn-priority-up" href="action.php?action=up&id=<?=$task['id_task']?>">⇧</a>
-    <a class="submit btn-priority-down" href="action.php?action=down&id=<?=$task['id_task']?>">⇩</a>
-    <a class="submit btn-del-task" href="action.php?action=delete&id=<?=$task['id_task']?>">DELET</a>
-    <a class="submit btn-finish-task" href="action.php?action=state&id=<?=$task['id_task']?>">FINISH ✓</a>
+    <a class="submit btn-priority-up" href="action.php?action=up&id=<?=$task['id_task'].'&token='.$_SESSION['token']?>">⇧</a>
+    <a class="submit btn-priority-down" href="action.php?action=down&id=<?=$task['id_task'].'&token='.$_SESSION['token']?>">⇩</a>
+    <a class="submit btn-del-task" href="action.php?action=delete&id=<?=$task['id_task'].'&token='.$_SESSION['token']?>">DELET</a>
+    <a class="submit btn-finish-task" href="action.php?action=state&id=<?=$task['id_task'].'&token='.$_SESSION['token']?>">FINISH ✓</a>
     </form>
     </li>
     <?php

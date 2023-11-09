@@ -2,10 +2,7 @@
 session_start();
 require_once './_function.php';
 require_once './dbCo.php';
-// checkCSRF('index.php');
-
-
-
+checkCSRF('index.php');
 
 // FOR ADD NEW TASK
 if(isset($_POST['new_task'])) {  
@@ -16,7 +13,7 @@ if(isset($_POST['new_task'])) {
 $query = $dbCo->prepare("SELECT (COUNT(id_task)+1) AS row_ FROM task WHERE priority_task IS NOT NULL;");
 $query -> execute();
 $nbRow = $query->fetch();
-var_dump($nbRow['row']);
+var_dump($nbRow['row_']);
 
 $query = $dbCo->prepare(" INSERT INTO task (name_task, date_create, state_task, priority_task)
                             VALUES (:new_task, :day_now, 0, :nb_row)
