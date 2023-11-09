@@ -10,5 +10,4 @@ $notif = [
     'updatePriority' => '👍priorité mise à jour!',
     'error_referer' => '❌ Oups un probleme est survenue.',
     'error_token' => '❌ Oups un probleme est survenue.'
-    
 ];

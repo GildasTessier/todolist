@@ -17,9 +17,10 @@ generateToken();
 <body>
     <header class="container">
         <h1 class="home-title">My To Do +</h1>
-        <h2 class="notif"><?php
-        if(isset($_GET['notif'])){echo $notif[$_GET['notif']];}?>
-        </h2>
+        <h2 class="name-task-list">Task list 1<h2>
+        <p class="notif hidden" id="msg-notif"><?php
+            if(isset($_GET['notif']))echo $notif[$_GET['notif']]?>
+        </p>
         </header>
     <main>
         <ul>
@@ -57,7 +58,7 @@ foreach($result as $task) {
 
     </main>
     <footer>
-        <p class="text-footer"> By Aurelien & surtout Gildas </p>
+        <p class="text-footer"> By Aurelien & Gildas </p>
     </footer> 
     <script src="./asset/js/script.js"></script>  
 </body>
