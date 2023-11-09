@@ -104,7 +104,7 @@ $nbrow = $query->fetch();
         $msg='updatePriority';
     }
     // FOR DOWN
-    else if ($_GET['action'] === 'down' && $nbPrioTask < $nbrow['nb_row']) {
+    else if ($_GET['action'] === 'down' && $nbPrioTask['priority_task'] != $nbrow['nb_row']) {
         $query = $dbCo->prepare("UPDATE task SET priority_task = (priority_task - 1)  WHERE priority_task = (:priority_task + 1);
                                  UPDATE task SET priority_task = (priority_task + 1)  WHERE id_task = :id_task;");
 
