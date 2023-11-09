@@ -24,7 +24,7 @@ generateToken();
     <main>
         <ul>
         <?php
-$query = $dbCo->prepare("SELECT id_task, name_task, description_task FROM task WHERE state_task = 0 ORDER BY priority_task DESC");
+$query = $dbCo->prepare("SELECT id_task, name_task FROM task WHERE state_task = 0 ORDER BY priority_task");
 $query->execute();
 $result = $query->fetchAll();
 
@@ -36,8 +36,8 @@ foreach($result as $task) {
     <input type="submit" class="submit btn-mod-task" value="MODIFY">
     <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
     <input type="hidden" name="id" value="<?=$task['id_task']?>">
-    <a class="submit btn-priority-up" href="#">⇧</a>
-    <a class="submit btn-priority-down" href="#">⇩</a>
+    <a class="submit btn-priority-up" href="action.php?action=up&id=<?=$task['id_task']?>">⇧</a>
+    <a class="submit btn-priority-down" href="action.php?action=down&id=<?=$task['id_task']?>">⇩</a>
     <a class="submit btn-del-task" href="#">DELET</a>
     <a class="submit btn-finish-task" href="action.php?action=state&id=<?=$task['id_task']?>">FINISH ✓</a>
     </form>
