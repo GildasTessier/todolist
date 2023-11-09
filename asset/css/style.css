@@ -17,6 +17,7 @@ li {
     margin-top: 10px;
 }
 
+
 footer {
     text-align: center;
     margin-bottom: 80px;
@@ -49,6 +50,14 @@ input {
 }
 
 
+.notif{
+    margin-top: 10px;
+    font-size: 1rem;
+    text-align: center;
+    color:rgb(252, 0, 193);
+    background-color: rgba(252, 0, 193, 0.174);
+    padding: 0.5em;
+}
 
 /********** CARD TASK *************/
 .task {
@@ -58,7 +67,7 @@ input {
     margin: 5% 0;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(2, 1fr);
-
+    
     
 }
 .title-task {
@@ -66,7 +75,7 @@ input {
     border: 0;
     padding-left: 0.5em;
     font-size: 1em;
-
+    
     grid-column : 1 / 7 ;
     grid-row: 1 ;
 }
@@ -75,16 +84,16 @@ input {
     grid-row: 1;
     font-size: 1em;
     margin: 0.5em;
-
-
-
+    
+    
+    
 }
 .btn-priority-down {
     grid-column : 8 / 9;
     grid-row: 1;
     font-size: 1em;
     margin: 0.5em;
-
+    
     
 }
 .btn-mod-task {
@@ -127,7 +136,7 @@ input {
 .title-create-task {
     width: 55%;
     margin-right: 5%;
-
+    
 }
 
 

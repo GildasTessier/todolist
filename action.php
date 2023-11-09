@@ -26,15 +26,16 @@ $query = $dbCo->prepare(" INSERT INTO task (name_task, date_create, state_task)
         );
 
             if($isQueryOk && $query->rowCount()=== 1) {
-                $msg = 'La tache à été ajouté à la liste';
+                $msg = 'addTask';
             };
     }
         else {
-            $msg = 'Nom de tache vide';
+            $msg = 'addTaskError';
+            
         };
     }
     else {
-        $msg = 'Token non valide ';
+        $msg = 'addTaskError';
     }
 }
 
@@ -51,31 +52,39 @@ else if(isset($_POST['task'])) {
             );
             
             if($isQueryOk && $query->rowCount()=== 1) {
-                $msg = 'La tache à été ajouté à la liste';
+                $msg='updateTask';
             };
         }
         else {
-            $msg = 'Nom de tache vide';
+            $msg = 'addTaskError';
         };
     }
     else {
-        $msg = 'Token non valide ';
+        $msg = 'addTaskError';
     }
 }
 // FOR UPDATE STATE TASK
 else if ($_GET['action'] === 'state' && isset($_GET['id'])){
     $query = $dbCo->prepare(" UPDATE task SET state_task = 1 WHERE id_task = :id_task;");
-    $isquerryok = $query->execute([
+    $isQueryOk = $query->execute([
         'id_task' => intval($_GET['id'])
-        ]);}
+        ]);
+        if($isQueryOk && $query->rowCount()=== 1) {
+            $msg = 'updateStateTask';
+    }
+    }
 
 
 // FOR DELETE TASK
 else if ($_GET['action'] === 'delete' && isset($_GET['id'])){
     $query = $dbCo->prepare(" DELETE FROM task WHERE id_task = :id_task;");
-    $isquerryok = $query->execute([
+    $isQueryOk = $query->execute([
         'id_task' => intval($_GET['id'])
-        ]);}
+        ]);
+        if($isQueryOk && $query->rowCount()=== 1) {
+            $msg='deleteTask';
+    }
+}
 
-header('Location: index.php?')
+header('Location: index.php?notif='.$msg)
 ?>
