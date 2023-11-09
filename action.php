@@ -2,7 +2,7 @@
 session_start();
 require_once './_function.php';
 require_once './dbCo.php';
-checkCSRF('index.php');
+// checkCSRF('index.php');
 
 
 
@@ -13,7 +13,7 @@ if(isset($_POST['new_task'])) {
 
         if(strlen($_POST['new_task']) > 0) {  
 
-$query = $dbCo->prepare("SELECT (COUNT(id_task)+1) as row FROM task;");
+$query = $dbCo->prepare("SELECT (COUNT(id_task)+1) AS row_ FROM task WHERE priority_task IS NOT NULL;");
 $query -> execute();
 $nbRow = $query->fetch();
 var_dump($nbRow['row']);
@@ -24,7 +24,7 @@ $query = $dbCo->prepare(" INSERT INTO task (name_task, date_create, state_task, 
             $isQueryOk = $query->execute([
             'new_task' => strip_tags($_POST['new_task']), 
             'day_now' => date('Y-m-d h:i:s'),
-            'nb_row' => $nbRow['row']]
+            'nb_row' => $nbRow['row_']]
         );
 
             if($isQueryOk && $query->rowCount()=== 1) {
@@ -66,14 +66,17 @@ else if(isset($_POST['task'])) {
 }
 //FOR UPDATE STATE TASK
 else if ($_GET['action'] === 'state' && isset($_GET['id'])){
-
-        // FOR CHANDE ORDER WHEN DELETE
-        updateNbPriority($dbCo);
+    
+    // FOR CHANDE ORDER WHEN DELETE
+    updateNbPriority($dbCo);
     $query = $dbCo->prepare(" UPDATE task SET state_task = 1, priority_task = NULL WHERE id_task = :id_task;");
-    $isquerryok = $query->execute([
+    $isQueryOk = $query->execute([
         'id_task' => intval($_GET['id'])
-        ]);}
-        
+    ]);
+    if($isQueryOk && $query->rowCount()=== 1) {
+        $msg='updateStateTask';
+    };
+} 
 
 
 // FOR CHANGE ORDER IN LIST
@@ -81,41 +84,49 @@ else if ($_GET['action'] === 'state' && isset($_GET['id'])){
         // UP
         else if ($_GET['action'] === 'up' && isset($_GET['id'])){
             $query = $dbCo->prepare(" UPDATE task SET priority_task = (priority_task - 1)  WHERE id_task = :id_task;");
-            $isquerryok = $query->execute([
+            $isQueryOk = $query->execute([
                 'id_task' => intval($_GET['id'])
                 ]);
 
             $query = $dbCo->prepare(" SELECT priority_task FROM task WHERE id_task = :id_task;");
-            $isquerryok = $query->execute([
+            $isQueryOk = $query->execute([
                 'id_task' => intval($_GET['id'])
             ]);
             $nbprio = $query->fetch();
             
             $query = $dbCo->prepare(" UPDATE task SET priority_task = (:nbPrio + 1) WHERE id_task <> :id_task AND priority_task = :nbPrio;");
-            $isquerryok = $query->execute([
+            $isQueryOk = $query->execute([
                 'id_task' => intval($_GET['id']),
                 'nbPrio' => $nbprio['priority_task']
             ]);
-            }
+            if($isQueryOk && $query->rowCount()=== 1) {
+                $msg='updatePriority';
+            };
+            
+        }
 
             //DOWN
             else if ($_GET['action'] === 'down' && isset($_GET['id'])){
                 $query = $dbCo->prepare(" UPDATE task SET priority_task = (priority_task + 1)  WHERE id_task = :id_task;");
-                $isquerryok = $query->execute([
+                $isQueryOk = $query->execute([
                     'id_task' => intval($_GET['id'])
                     ]);
     
                 $query = $dbCo->prepare(" SELECT priority_task FROM task WHERE id_task = :id_task;");
-                $isquerryok = $query->execute([
+                $isQueryOk = $query->execute([
                     'id_task' => intval($_GET['id'])
                 ]);
                 $nbprio = $query->fetch();
                 
                 $query = $dbCo->prepare(" UPDATE task SET priority_task = (:nbPrio - 1) WHERE id_task <> :id_task AND priority_task = :nbPrio;");
-                $isquerryok = $query->execute([
+                $isQueryOk = $query->execute([
                     'id_task' => intval($_GET['id']),
                     'nbPrio' => $nbprio['priority_task']
                 ]);
+                if($isQueryOk && $query->rowCount()=== 1) {
+                    $msg='updatePriority';
+                };
+                
                 }
 
 
