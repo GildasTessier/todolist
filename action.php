@@ -80,54 +80,45 @@ else if ($_GET['action'] === 'state' && isset($_GET['id'])){
 
 
 // FOR CHANGE ORDER IN LIST
+else if (($_GET['action'] === 'up'|| $_GET['action'] === 'down') && isset($_GET['id'])){ 
 
-        // UP
-        else if ($_GET['action'] === 'up' && isset($_GET['id'])){
-            $query = $dbCo->prepare(" UPDATE task SET priority_task = (priority_task - 1)  WHERE id_task = :id_task;");
-            $isQueryOk = $query->execute([
-                'id_task' => intval($_GET['id'])
-                ]);
+    $query = $dbCo->prepare ("SELECT priority_task FROM task WHERE id_task = :id_task;");
+$isQueryOk = $query->execute([
+'id_task' => intval($_GET['id'])]);
+$nbPrioTask = $query->fetch();
 
-            $query = $dbCo->prepare(" SELECT priority_task FROM task WHERE id_task = :id_task;");
-            $isQueryOk = $query->execute([
-                'id_task' => intval($_GET['id'])
+$query = $dbCo->prepare ("SELECT COUNT(id_task) as nb_row FROM task WHERE state_task = 0");
+$query->execute();
+$nbrow = $query->fetch();
+
+    // FOR UP
+    if ($_GET['action'] === 'up' && $nbPrioTask != 1) {
+
+        $query = $dbCo->prepare("UPDATE task SET priority_task = (priority_task + 1)  WHERE priority_task = (:priority_task - 1);
+                                 UPDATE task SET priority_task = (priority_task - 1)  WHERE id_task = :id_task;");
+
+        $isQueryOk = $query->execute([
+            'id_task' => intval($_GET['id']),
+            'priority_task' => intval($nbPrioTask['priority_task'])
             ]);
-            $nbprio = $query->fetch();
-            
-            $query = $dbCo->prepare(" UPDATE task SET priority_task = (:nbPrio + 1) WHERE id_task <> :id_task AND priority_task = :nbPrio;");
-            $isQueryOk = $query->execute([
-                'id_task' => intval($_GET['id']),
-                'nbPrio' => $nbprio['priority_task']
-            ]);
-            if($isQueryOk && $query->rowCount()=== 1) {
-                $msg='updatePriority';
-            };
-            
-        }
+        $msg='updatePriority';
+    }
+    // FOR DOWN
+    else if ($_GET['action'] === 'down' && $nbPrioTask < $nbrow['nb_row']) {
+        $query = $dbCo->prepare("UPDATE task SET priority_task = (priority_task - 1)  WHERE priority_task = (:priority_task + 1);
+                                 UPDATE task SET priority_task = (priority_task + 1)  WHERE id_task = :id_task;");
 
-            //DOWN
-            else if ($_GET['action'] === 'down' && isset($_GET['id'])){
-                $query = $dbCo->prepare(" UPDATE task SET priority_task = (priority_task + 1)  WHERE id_task = :id_task;");
-                $isQueryOk = $query->execute([
-                    'id_task' => intval($_GET['id'])
-                    ]);
-    
-                $query = $dbCo->prepare(" SELECT priority_task FROM task WHERE id_task = :id_task;");
-                $isQueryOk = $query->execute([
-                    'id_task' => intval($_GET['id'])
-                ]);
-                $nbprio = $query->fetch();
-                
-                $query = $dbCo->prepare(" UPDATE task SET priority_task = (:nbPrio - 1) WHERE id_task <> :id_task AND priority_task = :nbPrio;");
-                $isQueryOk = $query->execute([
-                    'id_task' => intval($_GET['id']),
-                    'nbPrio' => $nbprio['priority_task']
-                ]);
-                if($isQueryOk && $query->rowCount()=== 1) {
-                    $msg='updatePriority';
-                };
-                
-                }
+        $isQueryOk = $query->execute([
+            'id_task' => intval($_GET['id']),
+            'priority_task' => intval($nbPrioTask['priority_task'])
+            ]);
+        $msg='updatePriority';
+    }
+
+    else {
+        $msg = 'addTaskError';
+    }
+}
 
 
 // FOR DELETE TASK
