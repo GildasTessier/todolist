@@ -108,7 +108,7 @@ $nbrow = $query->fetch();
     }
 
     else {
-        $msg = '';
+        $msg = 'nothing';
     }
 }
 
@@ -126,7 +126,6 @@ else if ($_GET['action'] === 'delete' && isset($_GET['id'])){
             $msg='deleteTask';
     }
 };
-
 $_SESSION['notif'] = $msg;
 header('Location: index.php')
 ?>
