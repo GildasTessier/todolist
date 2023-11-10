@@ -6,24 +6,22 @@ checkCSRF('index.php');
 $msg = 'nothing';
 
 // FOR ADD NEW TASK
-if(isset($_POST['new_task'])) {  
+if(isset($_POST['add'])) {  
     if(isset($_POST['token']) && isset($_SESSION['token']) && $_SESSION['token'] === $_POST['token']) {
 
-        if(strlen($_POST['new_task']) > 0) {  
+        if(strlen($_POST['name_task']) > 0) {  
 
 $query = $dbCo->prepare("SELECT (COUNT(id_task)+1) AS row_ FROM task WHERE priority_task IS NOT NULL;");
 $query -> execute();
 $nbRow = $query->fetch();
 
 $date_alert = strlen($_POST['alert_date']) === 0 ? NULL : strip_tags($_POST['alert_date']);
-var_dump($date_alert);
-var_dump($_POST['alert_date']);
 
 $query = $dbCo->prepare(" INSERT INTO task (name_task, alert_date, date_create ,state_task, priority_task)
-                            VALUES (:new_task, :alert_date, :day_now, 0, :nb_row)
+                            VALUES (:name_task, :alert_date, :day_now, 0, :nb_row)
                             ");
             $isQueryOk = $query->execute([
-            'new_task' => strip_tags($_POST['new_task']), 
+            'name_task' => strip_tags($_POST['name_task']), 
             'alert_date' => $date_alert, 
             'day_now' => date('Y-m-d h:i:s'),
             'nb_row' => $nbRow['row_']]
@@ -41,11 +39,11 @@ $query = $dbCo->prepare(" INSERT INTO task (name_task, alert_date, date_create ,
 }
 
 // FOR MODIFY TASK
-else if(isset($_POST['task'])) {   
-        if(strlen($_POST['task']) > 0) {                        
+else if(isset($_POST['modify'])) {   
+        if(strlen($_POST['name_task']) > 0) {                        
             $query = $dbCo->prepare(" UPDATE task SET name_task = :name_task   WHERE id_task = :id_task ");
             $isQueryOk = $query->execute([
-                'name_task' => strip_tags($_POST['task']), 
+                'name_task' => strip_tags($_POST['name_task']), 
                 'id_task' => intval($_POST['id']) ]
             );
             
