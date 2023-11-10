@@ -19,7 +19,12 @@ generateToken();
         <h1 class="home-title">My To Do +</h1>
         <h2 class="name-task-list">Task list 1<h2>
         <p class="notif hidden" id="msg-notif"><?php
-            if(isset($_GET['notif']))echo $notif[$_GET['notif']]?>
+            if(isset($_SESSION['notif'])) {
+                echo $notif[$_SESSION['notif']];
+                unset($_SESSION['notif']);
+
+            };
+            ?>
         </p>
         </header>
     <main>

@@ -14,14 +14,17 @@ if(isset($_POST['new_task'])) {
 $query = $dbCo->prepare("SELECT (COUNT(id_task)+1) AS row_ FROM task WHERE priority_task IS NOT NULL;");
 $query -> execute();
 $nbRow = $query->fetch();
-var_dump($nbRow['row_']);
 
-$query = $dbCo->prepare(" INSERT INTO task (name_task, alert_date, date_create, state_task, priority_task)
+$date_alert = strlen($_POST['alert_date']) === 0 ? NULL : strip_tags($_POST['alert_date']);
+var_dump($date_alert);
+var_dump($_POST['alert_date']);
+
+$query = $dbCo->prepare(" INSERT INTO task (name_task, alert_date, date_create ,state_task, priority_task)
                             VALUES (:new_task, :alert_date, :day_now, 0, :nb_row)
                             ");
             $isQueryOk = $query->execute([
             'new_task' => strip_tags($_POST['new_task']), 
-            'alert_date' => strip_tags($_POST['alert_date']), 
+            'alert_date' => $date_alert, 
             'day_now' => date('Y-m-d h:i:s'),
             'nb_row' => $nbRow['row_']]
         );
@@ -35,15 +38,10 @@ $query = $dbCo->prepare(" INSERT INTO task (name_task, alert_date, date_create, 
             
         };
     }
-    else {
-        $msg = 'addTaskError';
-    }
 }
 
 // FOR MODIFY TASK
-else if(isset($_POST['task'])) {  
-    if(isset($_POST['token']) && isset($_SESSION['token']) && $_SESSION['token'] === $_POST['token']) {
-        
+else if(isset($_POST['task'])) {   
         if(strlen($_POST['task']) > 0) {                        
             $query = $dbCo->prepare(" UPDATE task SET name_task = :name_task   WHERE id_task = :id_task ");
             $isQueryOk = $query->execute([
@@ -53,8 +51,7 @@ else if(isset($_POST['task'])) {
             
             if($isQueryOk && $query->rowCount()=== 1) {
                 $msg='updateTask';
-            };
-        }
+            }
         else {
             $msg = 'addTaskError';
         };
@@ -70,20 +67,18 @@ else if ($_GET['action'] === 'state' && isset($_GET['id'])){
     updateNbPriority($dbCo);
     $query = $dbCo->prepare(" UPDATE task SET state_task = 1, priority_task = NULL WHERE id_task = :id_task;");
     $isQueryOk = $query->execute([
-        'id_task' => intval($_GET['id'])
+        'id_task' => intval(strip_tags($_GET['id']))
     ]);
     if($isQueryOk && $query->rowCount()=== 1) {
         $msg='updateStateTask';
     };
 } 
-
-
 // FOR CHANGE ORDER IN LIST
 else if (($_GET['action'] === 'up'|| $_GET['action'] === 'down') && isset($_GET['id'])){ 
 
     $query = $dbCo->prepare ("SELECT priority_task FROM task WHERE id_task = :id_task;");
 $isQueryOk = $query->execute([
-'id_task' => intval($_GET['id'])]);
+'id_task' => intval(strip_tags($_GET['id']))]);
 $nbPrioTask = $query->fetch();
 
 $query = $dbCo->prepare ("SELECT COUNT(id_task) as nb_row FROM task WHERE state_task = 0");
@@ -97,7 +92,7 @@ $nbrow = $query->fetch();
                                  UPDATE task SET priority_task = (priority_task - 1)  WHERE id_task = :id_task;");
 
         $isQueryOk = $query->execute([
-            'id_task' => intval($_GET['id']),
+            'id_task' => intval(strip_tags($_GET['id'])),
             'priority_task' => intval($nbPrioTask['priority_task'])
             ]);
         $msg='updatePriority';
@@ -108,7 +103,7 @@ $nbrow = $query->fetch();
                                  UPDATE task SET priority_task = (priority_task + 1)  WHERE id_task = :id_task;");
 
         $isQueryOk = $query->execute([
-            'id_task' => intval($_GET['id']),
+            'id_task' => intval(strip_tags($_GET['id'])),
             'priority_task' => intval($nbPrioTask['priority_task'])
             ]);
         $msg='updatePriority';
@@ -127,13 +122,13 @@ else if ($_GET['action'] === 'delete' && isset($_GET['id'])){
     // FOR DELETE
     $query = $dbCo->prepare(" DELETE FROM task WHERE id_task = :id_task;");
     $isQueryOk = $query->execute([
-        'id_task' => intval($_GET['id'])
+        'id_task' => intval(strip_tags($_GET['id']))
         ]);
         if($isQueryOk && $query->rowCount()=== 1) {
             $msg='deleteTask';
     }
-}
+};
 
-
-header('Location: index.php?notif='.$msg)
+$_SESSION['notif'] = $msg;
+header('Location: index.php')
 ?>
