@@ -74,6 +74,7 @@ input {
 
 /********** CARD TASK *************/
 .task {
+    position: relative;
     background: #9eb8b7;
     display: grid;
     width: 100%;
@@ -125,31 +126,57 @@ input {
     font-size: 0.6em;
     margin-right: 0.5em;
 }
+.alert-date-task {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 0.6rem;
+    font-style: italic;
+    color: rgba(18, 18, 18, 0.746);
+
+}
 
 /********** FORM CREATE TASK *************/
-.create-task {
+
+.li-create-task {
     position: fixed;
     width: 100%;
     max-width: 430px;
     margin: auto;
     bottom: 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
     background: #b8a99e;
     padding: 10px ;
 }
+.classic-option {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .btn-add-task {
     background: #b8a99e;
     bottom: 4%;
     border: solid 1px #f3e1d4;
     padding: 2%; 
-    margin-right: 5%;
+
+
 }
 .title-create-task {
-    width: 55%;
-    margin-right: 5%;
-    
+    width: 100%; 
+    margin-right: 4%;
+}
+.date-create-task {
+    margin: 0 2%;
+    font-size: 0.6em;
+}
+.btn-more-options {
+    font-size: 0.8em;
+    margin: 2% auto 0px auto;
+    width: 100%;
+    padding: 4px;
 }
 
 
