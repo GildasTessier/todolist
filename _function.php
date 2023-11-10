@@ -20,7 +20,7 @@ $_SESSION['tokenExpire'] =  time() +  15 * 60;
  */
 function checkCSRF(string $url): void
 {
-    if (!isset($_SERVER['HTTP_REFERER']) || !str_contains($_SERVER['HTTP_REFERER'], 'http://localhost/todolist')) {
+    if (!isset($_SERVER['HTTP_REFERER']) || !str_contains($_SERVER['HTTP_REFERER'], 'localhost/todolist')) {
         $_SESSION['notif'] = 'error_referer';
         header('Location: index.php');
         exit;

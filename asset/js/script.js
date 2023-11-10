@@ -16,3 +16,16 @@ document.querySelector('#btn-more-options').addEventListener('click', function (
         event.target.innerHTML = 'More oprtions'
     }
 })
+
+// FOR ADD ICON WHEN CALL BACK DATE IS TODAY
+console.log(document.querySelectorAll('.task'));
+let date = new Date();
+let dateNow = date.toISOString().split('T')[0]
+
+document.querySelectorAll('.task').forEach((task) => {
+    if(task.querySelector('.span-date-alert') == null) return;
+    let dateAlerte = task.querySelector('.span-date-alert').innerHTML
+    if (dateAlerte != dateNow) return;
+    let text = '⏰ ' + task.querySelector('.title-task').getAttribute('value') + ' ⏰'
+    task.querySelector('.title-task').setAttribute('value', text);
+});

@@ -47,7 +47,7 @@ foreach($result as $task) {
     <a class="submit btn-priority-down" href="action.php?action=down&id=<?=$task['id_task'].'&token='.$_SESSION['token']?>">⇩</a>
     <a class="submit btn-del-task" href="action.php?action=delete&id=<?=$task['id_task'].'&token='.$_SESSION['token']?>">DELET</a>
     <a class="submit btn-finish-task" href="action.php?action=state&id=<?=$task['id_task'].'&token='.$_SESSION['token']?>">FINISH ✓</a>
-    <p class="alert-date-task"><?=isset($task['alert_date'])?'Call back on '.$task['alert_date'] : '' ?></p>
+    <p class="alert-date-task"><?=isset($task['alert_date'])?'Call back on <span class="span-date-alert">'.$task['alert_date'].'</span>' : '' ?></p>
     </form>
     </li>
     <?php
