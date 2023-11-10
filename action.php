@@ -16,11 +16,12 @@ $query -> execute();
 $nbRow = $query->fetch();
 var_dump($nbRow['row_']);
 
-$query = $dbCo->prepare(" INSERT INTO task (name_task, date_create, state_task, priority_task)
-                            VALUES (:new_task, :day_now, 0, :nb_row)
+$query = $dbCo->prepare(" INSERT INTO task (name_task, alert_date, date_create, state_task, priority_task)
+                            VALUES (:new_task, :alert_date, :day_now, 0, :nb_row)
                             ");
             $isQueryOk = $query->execute([
             'new_task' => strip_tags($_POST['new_task']), 
+            'alert_date' => strip_tags($_POST['alert_date']), 
             'day_now' => date('Y-m-d h:i:s'),
             'nb_row' => $nbRow['row_']]
         );
@@ -114,7 +115,7 @@ $nbrow = $query->fetch();
     }
 
     else {
-        $msg = 'nothing';
+        $msg = '';
     }
 }
 
