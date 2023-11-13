@@ -44,7 +44,6 @@ if(isset($_POST['category'])) {
                 'date_create' => $dateNow
                 ]);
                 $idTask = $query->fetch();
-                var_dump($idTask);
 
     foreach ($_POST['category'] as $id ) {
 
@@ -71,7 +70,7 @@ else if(isset($_POST['modify'])) {
             $query = $dbCo->prepare(" UPDATE task SET name_task = :name_task   WHERE id_task = :id_task ");
             $isQueryOk = $query->execute([
                 'name_task' => strip_tags($_POST['name_task']), 
-                'id_task' => intval($_POST['id']) ]
+                'id_task' => intval(strip_tags($_POST['id'])) ]
             );
             
             if($isQueryOk && $query->rowCount()=== 1) {
@@ -100,7 +99,7 @@ else if (isset($_GET['action']) && $_GET['action'] === 'state_unfinish' && isset
 
     $query = $dbCo->prepare(" SELECT id_category FROM association WHERE id_task = :id_task;");
     $query->execute([
-        'id_task' => intval($_GET['id']),
+        'id_task' => intval(strip_tags($_GET['id'])),
         ]);
         $idCategory = $query->fetchAll();
 
@@ -116,7 +115,7 @@ $nb = $query->fetch();
 $query = $dbCo->prepare("  UPDATE association SET priority_task = :priority_task WHERE id_task = :id_task AND id_category = :id_category;");
 $query->execute([
     'priority_task' => $nb['row_'],
-    'id_task' => intval($_GET['id']),
+    'id_task' => intval(strip_tags($_GET['id'])),
     'id_category' => $key['id_category']
 ]);
 }
