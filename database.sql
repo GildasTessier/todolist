@@ -7,6 +7,17 @@ CREATE TABLE task(
    priority_task SMALLINT,
    PRIMARY KEY(id_task)
 );
+CREATE TABLE association(
+   id_association INT, 
+   name_association VARCHAR(30),
+   id_task INT,
+   id_category INT,
+   PRIMARY KEY(id_association)
+   FOREIGN KEY(id_task) REFERENCES task(id_task),
+   FOREIGN KEY(id_category) REFERENCES category(id_category)
+)
+
+
 
 INSERT INTO task (name_task, date_create, description_task, state_task)
 VALUES ("faire mon lit", "2023-11-07 10:00:35","fair mon lit au carré ",0),
