@@ -1,4 +1,20 @@
 <?php
+function getUrlWithParam ($urlStart):void {
+    $url = $urlStart . '?';
+    foreach ($_GET as $key => $value) {
+       $url .= $key . '=' . $value . '&';
+    }
+    $_SESSION['url'] = $url;
+}
+
+
+
+
+
+
+
+
+
 // require_once './dbCo.php';
 
 /**
@@ -42,13 +58,32 @@ $query->execute([
     'id_task' => intval($_GET['id'])
     ]);
 $nb = $query->fetch();
-var_dump($nb['priority_task']);
 $query = $dbCo->prepare(" UPDATE task SET priority_task = (priority_task - 1) WHERE priority_task > :priority_task;");
 $query->execute([
     'priority_task' => $nb['priority_task']
 ]);
 }
+function updateNbPriorityCategorie($dbCo):void {
+    $query = $dbCo->prepare(" SELECT id_category FROM association WHERE id_task = :id_task;");
+    $query->execute([
+        'id_task' => intval($_GET['id']),
+        ]);
+        $idCategory = $query->fetchAll();
 
-// test
+        foreach ($idCategory as  $key) {
+$query = $dbCo->prepare(" SELECT priority_task FROM association WHERE id_task = :id_task AND id_category = :id_category;");
+$query->execute([
+    'id_task' => intval($_GET['id']),
+    'id_category' => $key['id_category']
+    ]);
+$nb = $query->fetch();
+$query = $dbCo->prepare(" UPDATE association SET priority_task = (priority_task - 1) WHERE priority_task > :priority_task AND id_category = :id_category;");
+$query->execute([
+    'priority_task' => $nb['priority_task'],
+    'id_category' => $key['id_category']
+]);
+}
+}
+
 
 
