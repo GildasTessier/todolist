@@ -1,8 +1,9 @@
 <?php
 session_start();
-require_once './_function.php';
-require_once './dbCo.php';
-include './notif.php';
+require_once './vendor/autoload.php';
+require_once './includes/_function.php';
+require_once './includes/_dbCo.php';
+include './includes/_notif.php';
 generateToken();
 getUrlWithParam('index.php');
 ?>
@@ -29,9 +30,19 @@ getUrlWithParam('index.php');
             $resultCategorys = $result;
             if(sizeof($result) > 0 )  {
             foreach($result as $category) {
-                echo '<li class="li-burger-menu"><a  href="index.php?category='.$category['name_category'].'&id_category='.$category['id_category'].'">'.$category['name_category'].'</a></li>';
+                echo '<li class="li-burger-menu">
+                        <a  href="index.php?category='.$category['name_category'].'&id_category='.$category['id_category'].'">'.$category['name_category'].'</a>
+                        <a  href="action.php?action=deletecategory&id_category='.$category['id_category'].'&token='.$_SESSION['token'].'">DELETE</a>
+                        </li>';
             }}
              ?>
+                <li class="li-burger-menu li-burger-menu-form">
+                    <form action="action.php" method="post">
+                    <input type="text" placeholder="ADD NEW CATEGORY" name="new-category" required="text" value="">
+                    <input type="submit" value="ADD" class="btn-add-category">
+                    <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
+                </form>
+        </li>
             </ul>
         </nav>
          <h2 class="name-task-list"><?=(isset($_GET['category']))? $_GET['category'] : 'All tasks'?><h2>

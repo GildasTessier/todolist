@@ -1,12 +1,50 @@
 <?php
 session_start();
-require_once './_function.php';
-require_once './dbCo.php';
+require_once './vendor/autoload.php';
+require_once './includes/_function.php';
+require_once './includes/_dbCo.php';
 checkCSRF('index.php');
 $msg = 'nothing';
 
+
+// FOR DELETE CATEGORY
+if ((isset($_GET['action']) && ($_GET['action'] === 'deletecategory'))) {
+    $query = $dbCo->prepare("DELETE FROM association WHERE id_category = :id_category;
+                             DELETE FROM category WHERE id_category = :id_category;");
+            $isQueryOk = $query -> execute(
+                ['id_category' => strip_tags($_GET['id_category'])]);
+
+                if($isQueryOk ) {
+                    $msg = 'deleteCategory';
+                }
+        
+            else {
+                $msg = 'deleteCategoryError';
+                
+            }
+}
+
+
+// FOR ADD NEW CATEGORY
+else if(isset($_POST['new-category'])) {
+$query = $dbCo->prepare("INSERT INTO category(name_category) VALUES (:new_category)");
+            $isQueryOk = $query -> execute(
+                ['new_category' => strip_tags($_POST['new-category'])]);
+
+                if($isQueryOk && $query->rowCount()=== 1) {
+                    $msg = 'addCategory';
+                }
+            
+            else {
+                $msg = 'addCategoryError';
+                
+            }
+        }
+
+
+
 // FOR ADD NEW TASK
-if(isset($_POST['add'])) {  
+else if(isset($_POST['add'])) {  
 
         if(strlen($_POST['name_task']) > 0) {  
 

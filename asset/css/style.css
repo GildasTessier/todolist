@@ -107,6 +107,26 @@ input, select {
     color: black;
     text-transform: uppercase;
 }
+.li-burger-menu > form > input {
+    background-color: rgb(180, 162, 199);
+    border: none;
+    padding: 15px 0;
+    width: 80%;
+}
+.li-burger-menu > form > .btn-add-category {
+    background: #B4A2C6;
+    bottom: 4%;
+    border: solid 1px #e4d9ee;
+    padding: 5px;
+    width: 15%;
+}
+
+.li-burger-menu-form {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+
 
 
 
