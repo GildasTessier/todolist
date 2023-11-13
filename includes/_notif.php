@@ -12,6 +12,7 @@ $notif = [
     'error_token' => '❌ Oups un probleme est survenue.',
     'addCategory' => '👍La categorier a été crée',
     'addCategoryError' => '❌ Oups un probleme est survenue.',
-    'deleteCategory' => '👍La categorier a été supprimé',
-    'deleteCategoryError' => '❌ Oups un probleme est survenue.'
+    'deleteCategory' => '👍La categorie a été supprimé',
+    'deleteCategoryError' => '❌ Oups un probleme est survenue.',
+    'modifyCategory' => '👍 Categorie modifié'
 ];

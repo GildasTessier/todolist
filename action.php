@@ -5,6 +5,7 @@ require_once './includes/_function.php';
 require_once './includes/_dbCo.php';
 checkCSRF('index.php');
 $msg = 'nothing';
+var_dump($_POST);
 
 
 // FOR DELETE CATEGORY
@@ -48,7 +49,8 @@ else if(isset($_POST['add'])) {
 
         if(strlen($_POST['name_task']) > 0) {  
 
-            
+            $dbCo->beginTransaction();
+
             $query = $dbCo->prepare("SELECT (COUNT(id_task)+1) AS row_ FROM task WHERE priority_task IS NOT NULL;");
             $query -> execute();
             $nbRow = $query->fetch();
@@ -65,6 +67,7 @@ else if(isset($_POST['add'])) {
             'day_now' => $dateNow,
             'nb_row' => $nbRow['row_']
             ]);
+            $dbCo->commit();
         
         if($isQueryOk && $query->rowCount()=== 1) {
             $msg = 'addTask';
@@ -74,33 +77,32 @@ else if(isset($_POST['add'])) {
         $msg = 'addTaskError';
         
     };
-}
-if(isset($_POST['category'])) {
-    $query = $dbCo->prepare("SELECT id_task FROM task WHERE name_task = :name_task AND date_create = :date_create");
-            $query->execute([
-                'name_task' => $nameTask,
-                'date_create' => $dateNow
-                ]);
-                $idTask = $query->fetch();
-                var_dump($idTask);
-
-    foreach ($_POST['category'] as $id ) {
-
-
-        $query = $dbCo->prepare("SELECT (COUNT(id_association)+1) AS row_ FROM association WHERE priority_task IS NOT NULL AND id_category = :id_category;");
+    if(isset($_POST['category'])) {
+        $query = $dbCo->prepare("SELECT id_task FROM task WHERE name_task = :name_task AND date_create = :date_create");
+        $query->execute([
+            'name_task' => $nameTask,
+            'date_create' => $dateNow
+        ]);
+        $idTask = $query->fetch();
+        
+        foreach ($_POST['category'] as $id ) {
+            
+            
+            $query = $dbCo->prepare("SELECT (COUNT(id_association)+1) AS row_ FROM association WHERE priority_task IS NOT NULL AND id_category = :id_category;");
             $query -> execute([
                 'id_category' => strip_tags($id)
             ]);
             $nbRow = $query->fetch();
-
-        $query = $dbCo->prepare("INSERT INTO association(id_task, id_category, priority_task) VALUES (:id_task, :id_category, :priority_task)");
-        $query->execute([
-            'id_task' => $idTask['id_task'],
-            'id_category' => strip_tags($id),
-            'priority_task' => $nbRow['row_']
+            
+            $query = $dbCo->prepare("INSERT INTO association(id_task, id_category, priority_task) VALUES (:id_task, :id_category, :priority_task)");
+            $query->execute([
+                'id_task' => $idTask['id_task'],
+                'id_category' => strip_tags($id),
+                'priority_task' => $nbRow['row_']
             ]);
+        }
+        
     }
-    
 }
 
 // FOR MODIFY TASK
@@ -121,6 +123,28 @@ else if(isset($_POST['modify'])) {
     }
     else {
         $msg = 'addTaskError';
+    }
+    if(isset($_POST['category'])) {
+        $query = $dbCo->prepare("DELETE FROM association WHERE id_task = :id_task");
+            $query -> execute([
+                'id_task' => intval($_POST['id'])
+            ]);
+        foreach ($_POST['category'] as $id ) {
+            
+            $query = $dbCo->prepare("SELECT (COUNT(id_association)+1) AS row_ FROM association WHERE priority_task IS NOT NULL AND id_category = :id_category;");
+            $query -> execute([
+                'id_category' => strip_tags($id)
+            ]);
+            $nbRow = $query->fetch();
+            
+            $query = $dbCo->prepare("INSERT INTO association(id_task, id_category, priority_task) VALUES (:id_task, :id_category, :priority_task)");
+            $query->execute([
+                'id_task' => intval($_POST['id']),
+                'id_category' => strip_tags($id),
+                'priority_task' => $nbRow['row_']
+            ]);
+        }
+        $msg = 'modifyCategory';
     }
 }
 //FOR UNFINISH TASK

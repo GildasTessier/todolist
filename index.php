@@ -32,7 +32,7 @@ getUrlWithParam('index.php');
             foreach($result as $category) {
                 echo '<li class="li-burger-menu">
                         <a  href="index.php?category='.$category['name_category'].'&id_category='.$category['id_category'].'">'.$category['name_category'].'</a>
-                        <a  href="action.php?action=deletecategory&id_category='.$category['id_category'].'&token='.$_SESSION['token'].'">DELETE</a>
+                        <a class="btn-delete-category" href="action.php?action=deletecategory&id_category='.$category['id_category'].'&token='.$_SESSION['token'].'">DELETE</a>
                         </li>';
             }}
              ?>
@@ -76,10 +76,21 @@ else {
     ]);
 }
 $result = $query->fetchAll();
+
+
 if(!isset($_GET['state'])){
     if(sizeof($result) < 1 ) echo '<p class="text-no-task">No task to display at the moment</p>';
-foreach($result as $task) {
-    ?>
+    foreach($result as $task) {
+        $query = $dbCo->prepare("SELECT id_category FROM association WHERE id_task = :id_task");
+            $query->execute(['id_task' => $task['id_task']]);
+            $categoryActive = $query->fetchAll();
+            $idCategoryTask = [];
+            if (isset($categoryActive[0]['id_category'])) {
+            foreach ($categoryActive as $value) {
+                $idCategoryTask[] .= $value['id_category'];
+            }
+        }
+        ?>
 <li>
     <form class="task" action="action.php" method="post">
    <input class="title-task" type="text" name="name_task" id="text-task" value="<?=$task['name_task']?>">
@@ -87,11 +98,23 @@ foreach($result as $task) {
     <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
     <input type="hidden" name="id" value="<?=$task['id_task']?>">
     <input type="hidden" name="modify" value="">
+
     <a class="submit btn-priority-up" href="action.php?action=up&id=<?=$task['id_task'].'&'.$_SERVER['QUERY_STRING'].'&token='.$_SESSION['token']?>">⇧</a>
     <a class="submit btn-priority-down" href="action.php?action=down&id=<?=$task['id_task'].'&'.$_SERVER['QUERY_STRING'].'&token='.$_SESSION['token']?>">⇩</a>
     <a class="submit btn-del-task" href="action.php?action=delete&id=<?=$task['id_task'].'&token='.$_SESSION['token']?>">DELET</a>
     <a class="submit btn-finish-task" href="action.php?action=state_finish&id=<?=$task['id_task'].'&token='.$_SESSION['token']?>">FINISH ✓</a>
     <p class="alert-date-task"><?=isset($task['alert_date'])?'Call back on <span class="span-date-alert">'.$task['alert_date'].'</span>' : '' ?></p>
+
+    <div class="add-category" id="">
+            <?php 
+            foreach ($resultCategorys as $category ) { 
+                echo '<input id="category-' . $category['id_category'] . $task['id_task'] .'" value="' . $category['id_category'] . '" type="checkbox" name="category[]"';
+                echo in_array($category['id_category'], $idCategoryTask)? "checked/> " : " />";
+                echo '<label for="category-' . $category['id_category']. $task['id_task'].'">'. $category['name_category'] . '</label>'; 
+        }
+            ?>
+            </div>
+
     </form>
     </li>
     <?php
@@ -135,6 +158,7 @@ foreach($result as $task) {
         }
             ?>
             </div>
+            <input class="js-more-option hidden" type="color" id="color" name="color" value="#9EB8B7">
         <a href="#" class="btn-more-options" id="btn-more-options">More options</a>
         <input class="btn-add-task" name="btn-task" type="submit" value="Add new task">
     </form>
