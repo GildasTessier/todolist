@@ -32,33 +32,11 @@ document.querySelector('#icon-menu-burger').addEventListener('click', function (
     document.querySelector('#burger-menu').classList.toggle('hidden')
 })
 
+// FOR DISPLAY FORM CREATE ACCOUNT
+document.querySelectorAll('.js-change-form').forEach((btn) => {
+    btn.addEventListener('click', function () {
+        document.querySelector('#form-connection').classList.toggle('hidden')
+        document.querySelector('#form-create-account').classList.toggle('hidden')
+})
+})
 
-// FOR ADD SELECT CATECORY TAG IN FORM ADD TASK
-// addSelectCategoryTag(addSelectCategoryTag)
-// document.querySelector('#add-category').addEventListener("change", function (event) {
-//     if (this.value != "0") {
-//         let newSelectCategory = '<select class="js-more-option" id="add-category"><option value="0">'
-//         event.target.querySelectorAll('option').forEach(option => {
-//             if(option['attributes']['value']["value"] != this.value && option != "0"){
-//                 newSelectCategory += '<option value="' + option['attributes']['value']["value"] + '">' + option['attributes']['value']["value"] + '</option>'
-//             }            
-//         });
-//         newSelectCategory += '</select>'
-//         document.querySelector("#add-category").insertAdjacentHTML('afterend', newSelectCategory);
-//     }
-//   });
-
-//   function addSelectCategoryTag () {
-//     document.querySelector('#add-category').addEventListener("change", function (event) {
-//         if (this.value != "0") {
-//             let newSelectCategory = '<select class="js-more-option" id="add-category"><option value="0">'
-//             event.target.querySelectorAll('option').forEach(option => {
-//                 if(option['attributes']['value']["value"] != this.value && option != "0"){
-//                     newSelectCategory += '<option value="' + option['attributes']['value']["value"] + '">' + option['attributes']['value']["value"] + '</option>'
-//                 }            
-//             });
-//             newSelectCategory += '</select>'
-//             document.querySelector("#add-category").insertAdjacentHTML('afterend', newSelectCategory);
-//         }
-//     });
-// }

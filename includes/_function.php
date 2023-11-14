@@ -85,5 +85,14 @@ $query->execute([
 }
 }
 
+function checkXSS(array &$array):void {
+     foreach ($array as $key => $value) {
+        if(is_array($value)) $value = array_map('strip_tags', $value);
+        else {
+            $array[$key] = strip_tags($value);
+        }}
+    }
+
+
 
 

@@ -14,5 +14,9 @@ $notif = [
     'addCategoryError' => '❌ Oups un probleme est survenue.',
     'deleteCategory' => '👍La categorie a été supprimé',
     'deleteCategoryError' => '❌ Oups un probleme est survenue.',
-    'modifyCategory' => '👍 Categorie modifié'
+    'modifyCategory' => '👍 Categorie modifié',
+    'alredyAccountMail' => '❌ Un compte existe déjà pour cette adresse.',
+    'createAccountError' => '❌ Oups un probleme est survenue.',
+    'createAccount' => '👍 Votre compte vient d\'être crée.',
+    'connectingError' => '❌ Oups un probleme est survenue.'
 ];
