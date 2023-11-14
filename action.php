@@ -132,6 +132,7 @@ else if (isset($_POST['add'])) {
     } else {
         $msg = 'addTaskError';
     };
+
     if (isset($_POST['category'])) {
         $query = $dbCo->prepare("SELECT id_task FROM task WHERE name_task = :name_task AND date_create = :date_create");
         $query->execute([
@@ -174,6 +175,7 @@ else if (isset($_POST['modify'])) {
         if ($isQueryOk && $query->rowCount() === 1) {
             $msg = 'updateTask';
         } else {
+
             $msg = 'addTaskError';
         };
     } else {
