@@ -11,13 +11,13 @@
             <label for="password" >Password</label>
             <input type="password" name="password" id="password" required> 
         </div>
-        <input type="hidden" name="action" value="connect-acount">
+        <input type="hidden" name="action" value="connect-account">
         <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
         <input class="submit" type="submit" value="CONNECTION">
         <a href="#" class="js-change-form" >Create an account</a>
     </form>
 
-    <form class ="create-acount hidden" action="action.php" method="post" id="form-create-account">
+    <form class ="create-account hidden" action="action.php" method="post" id="form-create-account">
         <p>Create account</p>
         <div>
             <label for="email" >E-mail</label>
@@ -31,7 +31,7 @@
             <label for="password" >Confirm password</label>
             <input id="password_two" name="password_two" type="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');"  required> 
         </div>
-        <input type="hidden" name="action" value="create-acount">
+        <input type="hidden" name="action" value="create-account">
         <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
         <input class="submit" type="submit" value="VALIDATION">
         <a href="#" class="js-change-form">Back to connecting page</a>
