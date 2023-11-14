@@ -41,6 +41,7 @@ getUrlWithParam('index.php');
                     <form action="action.php" method="post">
                     <input type="text" placeholder="ADD NEW CATEGORY" name="new-category" required="text" value="">
                     <input type="submit" value="ADD" class="btn-add-category">
+                    <input type="hidden" name="action" value="new-category">
                     <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
                 </form>
         </li>
@@ -103,7 +104,7 @@ if(!isset($_GET['state'])){
     <input type="submit" class="submit btn-mod-task" value="MODIFY">
     <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
     <input type="hidden" name="id" value="<?=$task['id_task']?>">
-    <input type="hidden" name="modify" value="">
+    <input type="hidden" name="action" value="modify">
 
     <a class="submit btn-priority-up" href="action.php?action=up&id=<?=$task['id_task'].'&'.$_SERVER['QUERY_STRING'].'&token='.$_SESSION['token']?>">⇧</a>
     <a class="submit btn-priority-down" href="action.php?action=down&id=<?=$task['id_task'].'&'.$_SERVER['QUERY_STRING'].'&token='.$_SESSION['token']?>">⇩</a>
@@ -153,7 +154,7 @@ foreach($result as $task) {
             <label  class="js-more-option hidden" for="task-text">Task name</label>
             <input class="title-create-task" type="text" name="name_task" id="task-text" >
             <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
-            <input type="hidden" name="add" value="">
+            <input type="hidden" name="action" value="add">
             
             <label class=" js-more-option hidden" for="task-datey">Add date call back</label>
             <input class="js-more-option date-create-task hidden" type="date" name="alert_date" id="task-date">

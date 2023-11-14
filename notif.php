@@ -9,5 +9,6 @@ $notif = [
     'updateStateTask' => '👍Le status de la tâche a été mis jour',
     'updatePriority' => '👍priorité mise à jour!',
     'error_referer' => '❌ Oups un probleme est survenue.',
-    'error_token' => '❌ Oups un probleme est survenue.'
+    'error_token' => '❌ Oups un probleme est survenue.',
+    'error' => '❌ Oups un probleme est survenue.'
 ];

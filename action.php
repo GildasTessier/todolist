@@ -3,16 +3,21 @@ session_start();
 require_once './vendor1/vendor/autoload.php';
 require_once './includes/_function.php';
 require_once './includes/_dbCo.php';
+
+
+
 checkXSS($_POST);
 checkXSS($_GET);
 
 checkCSRF('index.php');
 $msg = 'nothing';
 
+if (!isset($_REQUEST['action'])) $msg = 'error';
+
 //------------------------------
 // FOR CONNECTION USER
 //------------------------------
-if ((isset($_POST['action']) && ($_POST['action'] === 'connect-account'))) {
+else if ($_POST['action'] === 'connect-account') {
     
     $query = $dbCo->prepare("SELECT id_user FROM users WHERE mail_user = :mail_user AND password_user = :password_user;");
     $isQueryOk = $query->execute([
@@ -30,7 +35,7 @@ if ((isset($_POST['action']) && ($_POST['action'] === 'connect-account'))) {
 //------------------------------
 // FOR CREATE AN ACCOUNT
 //------------------------------
-else if ((isset($_POST['action']) && ($_POST['action'] === 'create-account'))) {
+else if ($_POST['action'] === 'create-account') {
     // CHECK IF THIS EMAIL DOSENT HAVE ALREDY AN ACCOUNT
     $query = $dbCo->prepare("SELECT COUNT(id_user) AS nb_user FROM users WHERE mail_user = :mail_user;");
     $isQueryOk = $query->execute(
@@ -56,7 +61,7 @@ else if ((isset($_POST['action']) && ($_POST['action'] === 'create-account'))) {
 //------------------------------
 // FOR DISCONNECT
 //------------------------------
-else if ((isset($_GET['action']) && ($_GET['action'] === 'disconnection'))) {
+else if ($_GET['action'] === 'disconnection') {
     $_SESSION['id_user'] = null;
 }
 
@@ -65,7 +70,7 @@ else if ((isset($_GET['action']) && ($_GET['action'] === 'disconnection'))) {
 //------------------------------
 // FOR DELETE CATEGORY
 //------------------------------
-else if ((isset($_GET['action']) && ($_GET['action'] === 'deletecategory'))) {
+else if ($_GET['action'] === 'deletecategory') {
     $query = $dbCo->prepare("DELETE FROM association WHERE id_category = :id_category;
                              DELETE FROM category WHERE id_category = :id_category;");
     $isQueryOk = $query->execute(
@@ -83,7 +88,7 @@ else if ((isset($_GET['action']) && ($_GET['action'] === 'deletecategory'))) {
 //------------------------------
 // FOR ADD NEW CATEGORY
 //------------------------------
-else if (isset($_POST['new-category'])) {
+else if ($_POST['action'] === 'new-category') {
     $query = $dbCo->prepare("INSERT INTO category(name_category) VALUES (:new_category)");
     $isQueryOk = $query->execute(
         ['new_category' => $_POST['new-category']]
@@ -100,7 +105,7 @@ else if (isset($_POST['new-category'])) {
 //------------------------------
 // FOR ADD NEW TASK
 //------------------------------
-else if (isset($_POST['add'])) {
+else if ($_POST['action'] === 'add') {
 
     if (strlen($_POST['name_task']) > 0) {
 
@@ -162,13 +167,14 @@ else if (isset($_POST['add'])) {
 //------------------------------
 // FOR MODIFY TASK
 //------------------------------
-else if (isset($_POST['modify'])) {
+else if ($_POST['action'] === 'modify') {
     if (strlen($_POST['name_task']) > 0) {
-        $query = $dbCo->prepare(" UPDATE task SET name_task = :name_task   WHERE id_task = :id_task ");
+        $query = $dbCo->prepare(" UPDATE task SET name_task = :name_task, color = :color   WHERE id_task = :id_task ");
         $isQueryOk = $query->execute(
             [
                 'name_task' => $_POST['name_task'],
-                'id_task' => intval($_POST['id'])
+                'id_task' => intval($_POST['id']),
+                'color' =>  $_POST['color']
             ]
         );
 
@@ -201,14 +207,14 @@ else if (isset($_POST['modify'])) {
                 'priority_task' => $nbRow['row_']
             ]);
         }
-        $msg = 'modifyCategory';
+        $msg = 'updateTask';
     }
 }
 
 //------------------------------
 //FOR UNFINISH TASK
 //------------------------------
-else if (isset($_GET['action']) && $_GET['action'] === 'state_unfinish' && isset($_GET['id'])) {
+else if ($_GET['action'] === 'state_unfinish' && isset($_GET['id'])) {
     $query = $dbCo->prepare("SELECT (COUNT(id_task)+1) AS row_ FROM task WHERE priority_task IS NOT NULL;");
     $query->execute();
     $nbRow = $query->fetch();
@@ -250,7 +256,7 @@ else if (isset($_GET['action']) && $_GET['action'] === 'state_unfinish' && isset
 //------------------------------
 //FOR UPDATE STATE TASK
 //------------------------------
-else if (isset($_GET['action']) && $_GET['action'] === 'state_finish' && isset($_GET['id'])) {
+else if ($_GET['action'] === 'state_finish' && isset($_GET['id'])) {
 
     // FOR CHANDE ORDER WHEN DELETE
     updateNbPriority($dbCo);
@@ -269,7 +275,7 @@ else if (isset($_GET['action']) && $_GET['action'] === 'state_finish' && isset($
 //------------------------------
 // FOR CHANGE ORDER
 //------------------------------
-else if (isset($_GET['action']) && ($_GET['action'] === 'up' || $_GET['action'] === 'down') && isset($_GET['id'])) {
+else if (($_GET['action'] === 'up' || $_GET['action'] === 'down') && isset($_GET['id'])) {
     // FOR CHANGE ORDER IN LIST BY CATEGORY
 
     if (isset($_GET['id_category'])) {
@@ -359,7 +365,7 @@ else if (isset($_GET['action']) && ($_GET['action'] === 'up' || $_GET['action'] 
 //------------------------------
 // FOR DELETE TASK
 //------------------------------
-else if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+else if ($_GET['action'] === 'delete' && isset($_GET['id'])) {
     // FOR CHANDE ORDER WHEN DELETE
     updateNbPriority($dbCo);
     updateNbPriorityCategorie($dbCo);
